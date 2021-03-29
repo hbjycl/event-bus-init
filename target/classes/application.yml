@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: hbjycl-eventbus
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: hbase:9300
+      repositories:
+        enable: true
+  elasticsearch:
+    rest:
+      uris: http://hbase:9200
+rocketmq:
+  name-server: 172.17.1.128:9876
+  producer:
+    group: ${spring.application.name}
+    send-message-timeout: 3000
+    compress-message-body-threshold: 4096
+    max-message-size: 4194304
+    retry-times-when-send-failed: 2
+    retry-times-when-send-async-failed: 2
+    retry-next-server: false
+    access-key:
+    secret-key:
+    enable-msg-trace: true
+    customized-trace-topic: RMQ_SYS_TRACE_TOPIC
+bird:
+  eventbus:
+    handler:
+      group: ${spring.application.name}
+      scan-packages: com.hbjycl.service
+      rocketmq:
+        name-server: http://172.17.1.128:9876
+        consume-thread-min: 20
+        consume-thread-max: 20
+        consume-timeout: 15
+        delay-level-when-next-consume: 0
+        message-model: clustering
+    log:
+      pool-size: 1
+      daemon: true
+      period: 20
+      threshold: 100
+      default-queue-size: 10240
+      thread-name-pattern: event-log-%d
