@@ -19,11 +19,6 @@ public class PostController {
     @Autowired
     private DeviceService deviceService;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public void test() {
-        com.hbjycl.model.TestEventArg test = new com.hbjycl.model.TestEventArg();
-        eventBus.push(test);
-    }
 
     @RequestMapping(value = "/device", method = RequestMethod.POST)
     public void device(@RequestBody DeviceInfo deviceInfo) {
