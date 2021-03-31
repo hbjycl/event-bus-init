@@ -3,6 +3,7 @@ package com.bird.eventbus.rocketmq.consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.springframework.context.SmartLifecycle;
@@ -36,7 +37,10 @@ public class RocketEventConsumerContainer implements SmartLifecycle {
             if (StringUtils.isBlank(topic)) {
                 continue;
             }
-            consumer.subscribe(StringUtils.replace(topic, ".", "_"), "*");
+
+            consumer.subscribe(StringUtils.replace(topic, ".", "_"),
+                    MessageSelector.bySql(" orgId = '10086' and deviceId is not null")
+            );
         }
     }
 

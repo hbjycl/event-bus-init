@@ -35,7 +35,11 @@ public class RocketEventSender implements IEventSender {
      */
     @Override
     public void fire(IEventArg eventArg) {
-        Message<?> message = MessageBuilder.withPayload(eventArg).build();
+        Message<?> message = MessageBuilder.withPayload(eventArg)
+                .setHeader("orgId",eventArg.getOrgId())
+                .setHeader("deviceId",eventArg.getDeviceId())
+                .setHeader("productId",eventArg.getProductId())
+                .build();
 
         EventSendLog sendLog = new EventSendLog(eventArg);
         rocketTemplate.asyncSend(this.getTopic(eventArg), message, new SendCallback() {

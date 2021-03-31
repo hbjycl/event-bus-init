@@ -10,6 +10,10 @@ public interface IEventArg extends Serializable {
 
     String getOrgId();
 
+    String getProductId();
+
+    String getDeviceId();
+
     /**
      * 事件唯一标识
      */

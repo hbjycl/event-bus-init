@@ -22,4 +22,8 @@ public class DeviceInfo extends EventArg {
     private String ip;
     @Field
     private String orgId;
+    @Field
+    private String deviceId;
+    @Field
+    private String productId;
 }
